@@ -4,7 +4,7 @@ import numpy as np
 import torch
 
 
-def set_seed(seed: int = 3407):
+def set_seed(seed: int = 3407) -> None:
     """
     pytorch, numpy, randomのseedを固定する。
     Args:
@@ -16,5 +16,5 @@ def set_seed(seed: int = 3407):
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
 
-    torch.use_deterministic_algorithms = True
-    torch.backends.cudnn.deterministic = True  # True:再現性は上がるが、処理パフォーマンスが低下
+    torch.use_deterministic_algorithms(mode=True)
+    torch.backends.cudnn.deterministic = True  # True:再現性は上がるが、処理パフォーマンスが低

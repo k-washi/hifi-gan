@@ -1,17 +1,18 @@
 version: '3'
 
 services:
-  ml-dev:
+  hifi-gan-ja-dev:
     build: .
-    container_name: ml-dev
-    image: ml-dev-image
+    container_name: hifi-gan-ja-dev
+    image: hifi-gan-ja-dev-image
     shm_size: '24gb'
     tty: true
     volumes: 
+      - /data/audio:/data
       - $PWD:/workspace
     command: '/bin/bash'
     ports:
-      - 18081-18090:18081-18090
+      - 18281-18290:18281-18290
     #runtime: nvidia
     deploy:
       resources:

@@ -1,8 +1,10 @@
 import os
-from hydra import compose, initialize_config_dir, initialize
-from omegaconf import OmegaConf
 
-def get_hydra_cnf(config_dir: str, config_name: str) -> OmegaConf:
+from hydra import compose, initialize_config_dir
+from omegaconf import DictConfig
+
+
+def get_hydra_cnf(config_dir: str, config_name: str) -> DictConfig:
     """[hydraのconfを取得]
 
     Args:
@@ -12,8 +14,8 @@ def get_hydra_cnf(config_dir: str, config_name: str) -> OmegaConf:
     config_dir = os.path.abspath(config_dir)
     with initialize_config_dir(version_base=None, config_dir=config_dir):
         cfg = compose(config_name=config_name)
-        #dict_to_config = Config(cfg_dict)  # type: ignore
-        #cfg: OmegaConf = OmegaConf.structured(dict_to_config)
+        # dict_to_config = Config(cfg_dict)  # type: ignore
+        # cfg: OmegaConf = OmegaConf.structured(dict_to_config)
         return cfg
 
 
