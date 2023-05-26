@@ -142,3 +142,4 @@ data.dvc
 checkpoints/
 results/
 nohup/
+logs/

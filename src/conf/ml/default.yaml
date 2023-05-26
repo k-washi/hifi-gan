@@ -1,13 +1,25 @@
 seed: 3407
 
-batch_size: 128
+batch_size: 16
+num_workers: 4
+num_epochs: 1000
+
+mix_precision: 32
+gpu_devices: 1
+profiler: simple
+
 optim:
   learning_rate: 2e-4
   optimizer: AdamW
   weight_decay: 0
-  optimizer_adam_beta1: 0.9
-  optimizer_adam_beta2: 0.98
-  clip_grad_norm: 1
-  clip_grad_value: 0
+  optimizer_beta1: 0.8
+  optimizer_beta2: 0.99
 
-epochs: 50
+loss:
+  loss_scale_mel: 45
+  use_sbd: true
+
+model_save:
+  top_k: -1
+  monitor: val_l1_loss
+  mode: min

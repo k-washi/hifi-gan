@@ -26,3 +26,7 @@ poetry run python ./src/dataset/preprocess/select_dataset_audio.py \
     --audio_time_sec_max 15 \
     --spk_time_sec_max 1800
 ```
+
+# Ref
+
+[Avocodo: Generative Adversarial Network for Artifact-Free Vocoder](https://github.com/ncsoft/avocodo/tree/main)

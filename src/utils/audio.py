@@ -212,9 +212,9 @@ def mel_spectrogram_torch(
         pad_mode="reflect",
         normalized=False,
         onesided=True,
-        return_complex=False,
+        return_complex=True,
     )
-
+    spec = torch.view_as_real(spec)
     spec = torch.sqrt(spec.pow(2).sum(-1) + 1e-9)
 
     spec = torch.matmul(mel_basis[fmax_dtype_device], spec)

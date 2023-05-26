@@ -1,6 +1,8 @@
 defaults:
   - _self_
   - ml: default
+  - dataset: default
+  - avocode: default
 
 hydra:
   run:

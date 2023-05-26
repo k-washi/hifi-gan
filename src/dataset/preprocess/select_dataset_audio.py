@@ -2,12 +2,12 @@
 
 import random
 from pathlib import Path
+from typing import List, Union
 
-import torch
 import librosa
+import torch
 from librosa.util import normalize
 from tqdm import tqdm
-from typing import Union, List
 
 from src.utils.audio import load_wave, save_wave
 from src.utils.logger import get_logger
@@ -21,7 +21,11 @@ MAX_WAV_VALUE = 32768.0
 
 
 def select_dataset_audio(
-    dataset_dir_list: List[Union[str, Path]], output_dir: Union[str, Path], sample_rate:int, audio_time_sec_max:float, spk_time_sec_max:float
+    dataset_dir_list: List[Union[str, Path]],
+    output_dir: Union[str, Path],
+    sample_rate: int,
+    audio_time_sec_max: float,
+    spk_time_sec_max: float,
 ) -> None:
     output_dir = Path(output_dir)
     output_dir.mkdir(exist_ok=True, parents=True)
@@ -48,8 +52,8 @@ def select_dataset_audio(
                 # 最大の音源長さをaudio_time_sec_maxに合わせる
                 if waveform.shape[0] / sample_rate > audio_time_sec_max:
                     waveform = waveform[: int(audio_time_sec_max * sample_rate)]
-                waveform = torch.Tensor(waveform).numpy()/ MAX_WAV_VALUE
-                waveform = normalize(waveform) * 0.95
+                #waveform = torch.Tensor(waveform).numpy() / MAX_WAV_VALUE
+                #waveform = normalize(waveform) * 0.95
                 waveform, _ = librosa.effects.trim(waveform)
                 # 話者ごとの音源時間を加算
                 waveform_time = waveform.shape[0] / sample_rate
