@@ -1,0 +1,13 @@
+sample_rate: 16000
+num_mel_bins: 80
+hop_size: 160
+win_size: 512
+fft_size: 512
+f_min: 0
+f_max: 8000
+
+train:
+  wav_langth: 25600
+
+aug:
+  time_strech: [0.9, 1.1, 0.5]

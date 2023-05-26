@@ -1,0 +1,21 @@
+model:
+  udio_channels: 1
+  inner_channels: 32
+  cond_channels: 80
+  upsample_ratios: [8, 8, 4]
+  lvc_layers_each_block: 4
+  lvc_kernel_size: 3
+  kpnet_hidden_channels: 64
+  kpnet_conv_size: 3
+  dropout: 0.0
+  diffusion_step_embed_dim_in: 128
+  diffusion_step_embed_dim_mid: 512
+  diffusion_step_embed_dim_out: 512
+  use_weight_norm: True
+
+diff:
+  T: 1000
+  beta_0: 0.000001
+  beta_T: 0.01
+  noise_schedule: ''
+  N: ''

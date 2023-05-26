@@ -32,7 +32,7 @@ mypy:
 
 .PHONY: test
 test:
-	poetry run pytest tests --cov=src --cov-report term-missing --durations 5
+	poetry run pytest tests -s --cov=src --cov-report term-missing --durations 5
 
 .PHONY: format
 format:

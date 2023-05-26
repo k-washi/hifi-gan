@@ -9,7 +9,7 @@ services:
     tty: true
     volumes: 
       - /data/audio:/data
-      - $PWD:/workspace
+      - $PWD:/hifi_gan
     command: '/bin/bash'
     ports:
       - 18281-18290:18281-18290

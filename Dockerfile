@@ -26,4 +26,4 @@ RUN pip install --upgrade pip setuptools requests
 RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
 ENV PATH="/opt/poetry/bin:$PATH"
 
-WORKDIR /workspace
+WORKDIR /hifi_gan

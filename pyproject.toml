@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "hifi-gan"
+name = "hifi_gan"
 version = "0.1.0"
 description = "Hifi-gan japanese speech train"
 #license = "MIT"
@@ -18,6 +18,9 @@ classifiers = [
     "Natural Language :: Japanese",
     "Programming Language :: Python",
     "Topic :: Software Development",
+]
+packages = [
+    { include = "src", from="."}
 ]
 
 [tool.poetry.dependencies]
@@ -62,7 +65,7 @@ profile = "black"
 line_length = 88
 
 [tool.mypy]
-python_version = 3.8
+python_version = "3.10"
 # following setting is same as pysen
 # https://github.com/pfnet/pysen/blob/main/setup.cfg#L12
 check_untyped_defs = true
@@ -87,5 +90,5 @@ warn_unused_configs = true
 warn_unused_ignores = true
 
 [build-system]
-requires = ["poetry-core>=^1.0.0"]
+requires = ["poetry-core>=^1.0.0", "setuptools"]
 build-backend = "poetry.core.masonry.api"
