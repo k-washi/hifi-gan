@@ -1,8 +1,8 @@
 sample_rate: 16000
 num_mel_bins: 80
 hop_size: 256
-win_size: 512
-fft_size: 512
+win_size: 1024
+fft_size: 1024
 f_min: 0
 f_max: 8000
 f_max_loss: 8000 # sr / 2

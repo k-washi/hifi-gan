@@ -16,11 +16,13 @@ logger = get_logger(debug=True)
 # PARAMS #
 ##########
 
-EXP_ID = "00001"
+EXP_ID = "00003"
 LOG_SAVE_DIR = f"logs/{EXP_ID}"
 MODEL_SAVE_DIR = f"checkpoints/{EXP_ID}"
 
 FAST_DEV_RUN = False # 確認用の実行を行うか
+
+PRETRAINE_MODEL_PATH = "checkpoints/00002/checkpoint-epoch=0426-val_l1_loss=0.0823.ckpt"
 
 # TRAIN PARAMS
 NUM_EPOCHS = 1000
@@ -49,7 +51,8 @@ def train(cfg: DictConfig):
     ################################
     
     dataset = VocoderDataModule(cfg)
-    model = AvocodoModule(cfg)
+    #model = AvocodoModule(cfg)
+    model = AvocodoModule.load_from_checkpoint(PRETRAINE_MODEL_PATH, cfg=cfg)
     
     ################################
     # コールバックなど訓練に必要な設定

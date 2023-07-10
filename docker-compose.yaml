@@ -8,15 +8,15 @@ services:
     shm_size: '24gb'
     tty: true
     volumes: 
-      - /data/audio:/data
+      - /mnt/hdd/audio:/data
       - $PWD:/hifi_gan
     command: '/bin/bash'
     ports:
       - 18281-18290:18281-18290
-    #runtime: nvidia
-    deploy:
-      resources:
-        reservations:
-          devices:
-          - driver: nvidia
-            capabilities: [gpu]
+    runtime: nvidia
+    #deploy:
+    #  resources:
+    #    reservations:
+    #      devices:
+    #      - driver: nvidia
+    #        capabilities: [gpu]

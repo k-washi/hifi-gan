@@ -109,6 +109,7 @@ class AvocodoModule(LightningModule):
         
         # train discriminator
         self.toggle_optimizer(optimizer_d)
+        y_g_hats = self.model(x)
         detached_y_g_hats = [x.detach() for x in y_g_hats]
         y_du_hat_r, y_du_hat_g, _, _ = self.combd(ys, detached_y_g_hats)
         loss_disc_u, losses_disc_u_r, losses_disc_u_g = discriminator_loss(y_du_hat_r, y_du_hat_g)
@@ -120,8 +121,10 @@ class AvocodoModule(LightningModule):
         optimizer_d.step()
         optimizer_d.zero_grad()
         self.untoggle_optimizer(optimizer_d)
+        
     def on_validation_epoch_start(self) -> None:
         self._val_loss_list = []
+    
     def validation_step(self, batch, batch_idx) -> STEP_OUTPUT | None:
         y, x, y_mel, _ = batch
         assert x.shape[0] == 1, f"validation batch size should be 1"
@@ -137,7 +140,7 @@ class AvocodoModule(LightningModule):
             fmax=self.cfg.dataset.f_max_loss
         )
         val_loss = F.l1_loss(y_mel, y_g_hat_mel)
-        val_loss = F.l1_loss(y_mel, y_g_hat_mel)
+        
         self.logger.experiment.add_audio(
             f'pred/{batch_idx}', y_g_hat.squeeze(), self.current_epoch, self.cfg.dataset.sample_rate)
         self.logger.experiment.add_audio(

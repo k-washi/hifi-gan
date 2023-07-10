@@ -27,6 +27,19 @@ poetry run python ./src/dataset/preprocess/select_dataset_audio.py \
     --spk_time_sec_max 1800
 ```
 
+# train
+
+```
+python ./pipeline/train/exp0001.py
+```
+
+# tesnsorboard
+
+```
+tensorboard --logdir=./logs/ --host=0.0.0.0 --port=18282
+```
+
+
 # Ref
 
 [Avocodo: Generative Adversarial Network for Artifact-Free Vocoder](https://github.com/ncsoft/avocodo/tree/main)

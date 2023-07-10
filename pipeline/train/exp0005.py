@@ -16,7 +16,7 @@ logger = get_logger(debug=True)
 # PARAMS #
 ##########
 
-EXP_ID = "00001"
+EXP_ID = "00005"
 LOG_SAVE_DIR = f"logs/{EXP_ID}"
 MODEL_SAVE_DIR = f"checkpoints/{EXP_ID}"
 
@@ -25,6 +25,8 @@ FAST_DEV_RUN = False # 確認用の実行を行うか
 # TRAIN PARAMS
 NUM_EPOCHS = 1000
 BATCH_SIZE = 16
+AUDIO_WIN_SIZE = 1024
+LEARNING_RATE = 1e-4
 
 LOG_NAME = f"avocodo_vocoder_b{int(BATCH_SIZE)}_e{int(NUM_EPOCHS)}"
 
@@ -41,6 +43,9 @@ def train(cfg: DictConfig):
     
     cfg.ml.num_epochs = NUM_EPOCHS
     cfg.ml.batch_size = BATCH_SIZE
+    cfg.ml.optim.learning_rate = LEARNING_RATE
+    cfg.dataset.win_size = AUDIO_WIN_SIZE
+    cfg.dataset.fft_size = AUDIO_WIN_SIZE
     
     logger.info(cfg)
     

@@ -71,8 +71,6 @@ class VoiceDataset(Dataset):
         waveform = load_wave(
             audio_file, sample_rate=self._sample_rate, is_torch=False, mono=True
         )[0]
-        waveform = waveform / MAX_WAV_VALUE
-        waveform = normalize(waveform) * 0.95
 
         if self._is_aug:
             waveform = self.waveform_aug(waveform, sample_rate=self._sample_rate)
