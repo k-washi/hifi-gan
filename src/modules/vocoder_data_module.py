@@ -8,6 +8,7 @@ from src.dataset.dataset import VoiceDataset
 from src.utils.logger import get_logger
 logger = get_logger(debug=True)
 
+
 class VocoderDataModule(LightningDataModule):
     def __init__(self, cfg):
         super().__init__()
@@ -35,8 +36,7 @@ class VocoderDataModule(LightningDataModule):
         self._f_min = cfg.dataset.f_min
         self._f_max = cfg.dataset.f_max
         self._f_max_loss = cfg.dataset.f_max_loss
-    
-    
+
     def train_dataloader(self) -> TRAIN_DATALOADERS:
         dataset = VoiceDataset(
             self._train_audio_files,

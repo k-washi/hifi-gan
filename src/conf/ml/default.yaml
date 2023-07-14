@@ -5,8 +5,11 @@ num_workers: 4
 num_epochs: 1000
 
 mix_precision: 32
+grad_clip_val: 0.5
 gpu_devices: 1
 profiler: simple
+
+accumulate_grad_batches: 1
 
 optim:
   learning_rate: 2e-4
@@ -14,6 +17,12 @@ optim:
   weight_decay: 0
   optimizer_beta1: 0.8
   optimizer_beta2: 0.99
+
+scheduler:
+  use: false
+  name: ExponentialLR
+  gamma: 0.995025
+  interval: epoch
 
 loss:
   loss_scale_mel: 45

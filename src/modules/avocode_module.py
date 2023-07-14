@@ -53,12 +53,37 @@ class AvocodoModule(LightningModule):
             lr,
             betas=[b1, b2]
         )
+        
+        if self.cfg.ml.scheduler.use:
+            if self.cfg.ml.scheduler.name == "ExponentialLR":
+                scheduler_g = torch.optim.lr_scheduler.ExponentialLR(
+                    optimizer=opt_g, gamma=self.cfg.ml.scheduler.gamma
+                )
+            
+            
+           
+                scheduler_d = torch.optim.lr_scheduler.ExponentialLR(
+                    optimizer=opt_d, gamma=self.cfg.ml.scheduler.gamma
+                )
+            else:
+                raise ValueError(f"Scheduler {shg_cfg.name} is not supported.")
+
+            
+            scheduler_g = {
+                "scheduler": scheduler_g,
+                "interval": self.cfg.ml.scheduler.interval,
+            }
+            scheduler_d = {
+                "scheduler": scheduler_d,
+                "interval":  self.cfg.ml.scheduler.interval,
+            }
+            return [opt_g, opt_d], [scheduler_g, scheduler_d]
         return [opt_g, opt_d], []
     
     def forward(self, z):
         return self.model(z)[-1]
     
-    def training_step(self, batch) -> STEP_OUTPUT:
+    def training_step(self, batch, batch_idx) -> STEP_OUTPUT:
         y, x, y_mel, _ = batch
         optimizer_g, optimizer_d = self.optimizers()
 
@@ -103,8 +128,9 @@ class AvocodoModule(LightningModule):
 
         self.log("train/g_loss", g_loss, prog_bar=True)
         self.manual_backward(g_loss)
-        optimizer_g.step()
-        optimizer_g.zero_grad()
+        if (batch_idx + 1) % self.cfg.ml.accumulate_grad_batches == 0:
+            optimizer_g.step()
+            optimizer_g.zero_grad()
         self.untoggle_optimizer(optimizer_g)
         
         # train discriminator
@@ -118,10 +144,18 @@ class AvocodoModule(LightningModule):
         d_loss = loss_disc_s + loss_disc_u
         self.log("train/d_loss", d_loss, prog_bar=True)
         self.manual_backward(d_loss)
-        optimizer_d.step()
-        optimizer_d.zero_grad()
+        if (batch_idx + 1) % self.cfg.ml.accumulate_grad_batches == 0:
+            optimizer_d.step()
+            optimizer_d.zero_grad()
         self.untoggle_optimizer(optimizer_d)
-        
+
+    def on_train_epoch_end(self) -> None:
+        if self.cfg.ml.scheduler.use:
+            sh_g, sh_d = self.lr_schedulers()
+            sh_g.step()
+            sh_d.step()
+        return None
+
     def on_validation_epoch_start(self) -> None:
         self._val_loss_list = []
     
