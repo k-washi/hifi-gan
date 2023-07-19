@@ -66,7 +66,7 @@ class AvocodoModule(LightningModule):
                     optimizer=opt_d, gamma=self.cfg.ml.scheduler.gamma
                 )
             else:
-                raise ValueError(f"Scheduler {shg_cfg.name} is not supported.")
+                raise ValueError(f"Scheduler {self.cfg.ml.scheduler.name} is not supported.")
 
             
             scheduler_g = {
