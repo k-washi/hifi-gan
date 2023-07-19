@@ -33,6 +33,16 @@ poetry run python ./src/dataset/preprocess/select_dataset_audio.py \
 python ./pipeline/train/exp0001.py
 ```
 
+# model convert
+
+pytorch lightning module から、pytorch module　に変更
+
+```
+python ./src/helper/plmodule_to_torch.py \
+--checkpoint checkpoints/00002/checkpoint-epoch=0426-val_l1_loss=0.0823.ckpt \
+--output ./data/avocodo_v1.pth
+```
+
 # tesnsorboard
 
 ```
@@ -43,3 +53,13 @@ tensorboard --logdir=./logs/ --host=0.0.0.0 --port=18282
 # Ref
 
 [Avocodo: Generative Adversarial Network for Artifact-Free Vocoder](https://github.com/ncsoft/avocodo/tree/main)
+
+# モデル
+
+|モデル|description|
+|-|-|
+|avocodo_v1.pth| 正規化音で学習したボコーダー|
+
+```
+gdown https://drive.google.com/u/1/uc?id=1GgLsmDRqVM9JzT7HcUYW8BR0dh5a1IPm -O avocodo_v1.pth
+```
