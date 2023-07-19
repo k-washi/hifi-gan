@@ -13,6 +13,9 @@ train:
 
 aug:
   time_stretch: [0.9, 1.1, 0.5]
+  volume_mul_params: [0,1, 0.25, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95]
+  volume_aug_rate: 0
+
 
 train_dataset_dir: /data/voc16k
 val_dataset_dir: /data/voc16k_val

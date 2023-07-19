@@ -8,7 +8,7 @@ from librosa.util import normalize
 from torch.utils.data import Dataset
 
 from src.utils.audio import load_wave, mel_spectrogram_torch
-
+from src.dataset.augments.volume import VolumeAugment
 MAX_WAV_VALUE = 32768
 
 
@@ -27,6 +27,8 @@ class VoiceDataset(Dataset):
         f_max: int = 8000,
         f_max_loss: int = 8000,
         sample_rate: int = 16000,
+        volume_mul_params: List = [0,1, 0.25, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95],
+        volume_aug_rate: float = 0.0,
         is_audio_path_only: bool = False,
     ) -> None:
         super().__init__()
@@ -55,6 +57,10 @@ class VoiceDataset(Dataset):
                     )
                 ]
             )
+            self.volume_aug = VolumeAugment(
+                volume_mul_params,
+                volume_aug_rate
+            )
 
     def __len__(self) -> int:
         return len(self._audio_filelist)
@@ -74,7 +80,7 @@ class VoiceDataset(Dataset):
 
         if self._is_aug:
             waveform = self.waveform_aug(waveform, sample_rate=self._sample_rate)
-
+            waveform = self.volume_aug(waveform)
         if waveform.shape[0] <= self._waveform_length:
             shortage = self._waveform_length - waveform.shape[0]
             waveform = np.pad(waveform, (0, shortage), "constant", constant_values=0)

@@ -36,6 +36,8 @@ class VocoderDataModule(LightningDataModule):
         self._f_min = cfg.dataset.f_min
         self._f_max = cfg.dataset.f_max
         self._f_max_loss = cfg.dataset.f_max_loss
+        self._volume_mul_params = cfg.dataset.aug.volume_mul_params
+        self._volume_aug_rate = cfg.dataset.aug.volume_aug_rate
 
     def train_dataloader(self) -> TRAIN_DATALOADERS:
         dataset = VoiceDataset(
@@ -50,7 +52,9 @@ class VocoderDataModule(LightningDataModule):
             sample_rate=self._sample_rate,
             f_min=self._f_min,
             f_max=self._f_max,
-            f_max_loss=self._f_max_loss
+            f_max_loss=self._f_max_loss,
+            volume_mul_params=self._volume_mul_params,
+            volume_aug_rate=self._volume_aug_rate
         )
         
         return DataLoader(
